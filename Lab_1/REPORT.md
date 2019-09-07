@@ -377,5 +377,71 @@ alexey@alexey-L380:~/Downloads$ curl  -X POST "https://api.vk.com/method/wall.po
 }
 ```
 ##### 1.3.3.2.  Ответьте на вопрос: каким образом передаются данные от пользователя к серверу в POST-запросах?
-TODO
+```
+alexey@alexey-L380:~/Downloads$ curl -v -d "mute_notifications=1&owner_id=32126472&v=5.101&access_token=$VKTOKEN&message=Hi" https://api.vk.com/method/wall.post 
+Trying 95.213.11.163...
+* TCP_NODELAY set
+* Connected to api.vk.com (95.213.11.163) port 443 (#0)
 
+***** TLS handshake, Client hello (1) *****
+
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0x55ceac2b7580)
+> POST /method/wall.post HTTP/2
+> Host: api.vk.com
+> User-Agent: curl/7.58.0
+> Accept: */*
+> Content-Length: 156
+> Content-Type: application/x-www-form-urlencoded
+> 
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+* We are completely uploaded and fine
+< HTTP/2 200 
+< server: VK
+< date: Sat, 07 Sep 2019 18:41:25 GMT
+< content-type: application/json; charset=utf-8
+< content-length: 29
+< x-powered-by: PHP/3.20892
+< cache-control: no-store
+< strict-transport-security: max-age=86400
+< 
+* Connection #0 to host api.vk.com left intact
+{"response":{"post_id":1195}}a
+```
+Данные передаются от пользователя в формате application/x-www-form-urlencoded. При Get запросе данных полей нету
+> Content-Length: 156
+> Content-Type: application/x-www-form-urlencoded
+
+
+'''
+alexey@alexey-L380:~/Downloads$ curl -v  -X GET "https://api.vk.com/method/wall.post?mute_notifications=1&owner_id=32126472&v=5.101&access_token=$VKTOKEN&message=HIIII"
+Note: Unnecessary use of -X or --request, GET is already inferred.
+*   Trying 93.186.225.192...
+* TCP_NODELAY set
+
+***** TLS handshake, Client hello (1) *****
+
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0x55c9a41a1580)
+> GET /method/wall.post?mute_notifications=1&owner_id=32126472&v=5.101&access_token=***********************&message=HIIII HTTP/2
+> Host: api.vk.com
+> User-Agent: curl/7.58.0
+> Accept: */*
+> 
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+< HTTP/2 200 
+< server: VK
+< date: Sat, 07 Sep 2019 18:36:12 GMT
+< content-type: application/json; charset=utf-8
+< content-length: 29
+< x-powered-by: PHP/3.20892
+< cache-control: no-store
+< strict-transport-security: max-age=86400
+< 
+* Connection #0 to host api.vk.com left inta
+{"response":{"post_id":1196}}
+'''
