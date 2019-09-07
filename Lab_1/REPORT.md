@@ -61,6 +61,7 @@ Date: Sat, 07 Sep 2019 14:48:17 GMT
 ``` 
 > Для чего нужен запрос HEAD?
 > > TODO
+
 > Какой сайт прислал ожидаемый ответ?
 ```vk.com ответил кодом 418 (I’m a teapot — Этот код был введен в 1998 году как одна из традиционных первоапрельских шуток IETF в RFC 2324, Hyper Text Coffee Pot Control Protocol. Не ожидается, что данный код будет поддерживаться реальными серверами)
 www.apple.com ответил кодом 301 (Moved Permanently — запрошенный документ был окончательно перенесен на новый URI, указанный в поле Location заголовка. Некоторые клиенты некорректно ведут себя при обработке данного кода. Появился в HTTP/1.0.)
@@ -195,7 +196,7 @@ alexey@alexey-L380:~/Downloads$ curl "https://api.vk.com/method/users.get?user_i
 ``` 
 Ссылка на аватарку `https://sun9-17.userapi.com/c844618/v844618129/c0b93/fOiVWl7m1GY.jpg?ava=1`
 ##### 1.3.2.3. Ответьте на вопросы: какой код ответа присылается от api? Что содержит тело ответа? В каком формате и какой кодировке содержаться данные? Какой веб-сервер отвечает на запросы? Какая версия протокола HTTP используется?
-```json
+```
 alexey@alexey-L380:~/Downloads$ curl  -v "https://api.vk.com/method/users.get?user_ids=32126472&fields=photo_400&v=5.101&access_token=$VKTOKEN" | jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -245,14 +246,19 @@ alexey@alexey-L380:~/Downloads$ curl  -v "https://api.vk.com/method/users.get?us
 ```
 > Какой код ответа присылается от api?
 > > 200
+
 > Что содержит тело ответа?
 > > Json
+
 > В каком формате и какой кодировке содержаться данные?
 > > content-type: application/json; charset=utf-8
+
 > Какой веб-сервер отвечает на запросы?
 > > server: VK 
+
 > Какая версия протокола HTTP используется?
 > > HTTP/2
+
 #### 1.3.3.  POST запросы проще отправлять с формы, встроенной в документацию api. Чтобы посмотреть, как выглядит запрос, можно воспользоваться панелью разработчика браузера (F12 в Chrome -> вкладка Network).
 ##### 1.3.3.1.  Отправьте запись на стену любому пользователю/группе и убедитесь, что она пришла. 
 ```bash
