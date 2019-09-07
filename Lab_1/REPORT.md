@@ -8,7 +8,66 @@
 #### 1.2.1. Запрос OPTIONS. Отправьте запрос на http://mail.ru, http://ya.ru, www.rambler.ru, https://www.google.ru, https://github.com/,   www.apple.com/. Для чего используется запрос OPTIONS? Какие коды ответов приходят при этом запросе? Какие сайты правильно обработали запрос и вернули ожидаемые данные?
  
 #### 1.2.2. Запрос HEAD.  vk.com, www.apple.com, www.msn.com. Для чего нужен запрос HEAD? Какой сайт прислал ожидаемый ответ?
- 
+
+```
+alexey@alexey-L380:~/Downloads$ curl  -i --head http://vk.com
+HTTP/1.1 418 
+Server: VK
+Date: Sat, 07 Sep 2019 14:47:08 GMT
+Content-Length: 0
+Connection: keep-alive
+X-Frontend: front202922
+Access-Control-Expose-Headers: X-Frontend
+
+
+alexey@alexey-L380:~/Downloads$ curl  -i --head http://www.apple.com
+HTTP/1.1 301 Moved Permanently
+Server: AkamaiGHost
+Content-Length: 0
+Location: https://www.apple.com/
+Cache-Control: max-age=0
+Expires: Sat, 07 Sep 2019 14:47:46 GMT
+Date: Sat, 07 Sep 2019 14:47:46 GMT
+Connection: keep-alive
+strict-transport-security: max-age=31536000
+Set-Cookie: geo=RU; path=/; domain=.apple.com
+Set-Cookie: ccl=LSX97Qv1O/3TsVPEjaYI+g==; path=/; domain=.apple.com
+
+
+alexey@alexey-L380:~/Downloads$ curl  -i --head http://www.msn.com
+HTTP/1.1 302 Found
+Cache-Control: no-cache, no-store, no-transform
+Pragma: no-cache
+Content-Length: 142
+Content-Type: text/html; charset=utf-8
+Expires: -1
+Location: http://www.msn.com/ru-ru/
+Vary: User-Agent
+Set-Cookie: PreferencesMsn=eyJIb21lUGFnZSI6eyJTdHJpcGVzIjpbXSwiTWVTdHJpcGVNb2R1bGVzIjpbXSwiTWFya2V0Q29uZmlndXJhdGlvbiI6eyJNYXJrZXQiOiJydS1ydSIsIlN1cHByZXNzUHJvbXB0IjpmYWxzZSwiUHJlZmVycmVkTGFuZ3VhZ2VDb2RlIjoicnUtcnUiLCJDb3VudHJ5Q29kZSI6IlJVIn19LCJFeHBpcnlUaW1lIjo2MzczNTA4Njg5NzYyOTE4MzQsIlZlcnNpb24iOjF90; domain=msn.com; expires=Mon, 07-Sep-2020 14:48:17 GMT; path=/; HttpOnly
+Set-Cookie: marketPref=ru-ru; domain=msn.com; expires=Mon, 07-Sep-2020 14:48:17 GMT; path=/; HttpOnly
+Access-Control-Allow-Origin: *
+X-AspNetMvc-Version: 5.2
+X-AppVersion: 20190824_17864432
+X-Activity-Id: d1602783-b836-4ef6-99cb-a3589d896415
+X-Az: {did:b24a0ea2b3ba45a59fc1d4d299c5ebc1, rid: 18, sn: neurope-prod-hp, dt: 2019-08-31T16:26:17.4648862Z, bt: 2019-08-25T00:14:05.8140966Z}
+X-UA-Compatible: IE=Edge;chrome=1
+X-Content-Type-Options: nosniff
+X-FRAME-OPTIONS: SAMEORIGIN
+X-Powered-By: ASP.NET
+Access-Control-Allow-Methods: HEAD,GET,OPTIONS
+X-XSS-Protection: 1
+X-MSEdge-Ref: Ref A: D1602783B8364EF699CBA3589D896415 Ref B: STOEDGE1007 Ref C: 2019-09-07T14:48:17Z
+Date: Sat, 07 Sep 2019 14:48:17 GMT
+``` 
+> Для чего нужен запрос HEAD?
+> > TODO
+> Какой сайт прислал ожидаемый ответ?
+```vk.com ответил кодом 418 (I’m a teapot — Этот код был введен в 1998 году как одна из традиционных первоапрельских шуток IETF в RFC 2324, Hyper Text Coffee Pot Control Protocol. Не ожидается, что данный код будет поддерживаться реальными серверами)
+www.apple.com ответил кодом 301 (Moved Permanently — запрошенный документ был окончательно перенесен на новый URI, указанный в поле Location заголовка. Некоторые клиенты некорректно ведут себя при обработке данного кода. Появился в HTTP/1.0.)
+www.msn.com ответил кодом 302 (Moved Temporarily — запрошенный документ временно доступен по другому URI, указанному в заголовке в поле Location.)
+
+vk.com ответил кодом которого не существует, www.apple.com сообщил не необхомости редиректа на https версию сайта (безопасно), www.msn.com перенаправили на росиийскую версию сайта http://www.msn.com/ ru-ru/ (не безопасно)
+``` 
 #### 1.2.3. Запросы GET и POST. Отправьте по запросу на yandex.ru, google.com и apple.com. Что они вернули? Что содержится в теле ответа?
  
 ### 1.3. Работа с api сайта. Многие крупные сервисы предоставляют открытое api. Как правило, оно реализовано на подходе REST, но это необязательно. Такое api используется сторонними сервисами и приложениями, которые хотят воспользоваться услугами предоставляющего такое api сервиса. Рассмотрим такое api на примере сайта vk.com (при желании можно выбрать другой подходящий сервис).
@@ -136,10 +195,68 @@ alexey@alexey-L380:~/Downloads$ curl "https://api.vk.com/method/users.get?user_i
 ``` 
 Ссылка на аватарку `https://sun9-17.userapi.com/c844618/v844618129/c0b93/fOiVWl7m1GY.jpg?ava=1`
 ##### 1.3.2.3. Ответьте на вопросы: какой код ответа присылается от api? Что содержит тело ответа? В каком формате и какой кодировке содержаться данные? Какой веб-сервер отвечает на запросы? Какая версия протокола HTTP используется?
+```json
+alexey@alexey-L380:~/Downloads$ curl  -v "https://api.vk.com/method/users.get?user_ids=32126472&fields=photo_400&v=5.101&access_token=$VKTOKEN" | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 87.240.129.130...
+* TCP_NODELAY set
+* Connected to api.vk.com (87.240.129.130) port 443 (#0)
+* (304) (OUT), TLS handshake, Client hello (1):
+......
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+} [5 bytes data]
+* Using Stream ID: 1 (easy handle 0x5611947c3580)
+} [5 bytes data]
+> GET /method/users.get?user_ids=32126472&fields=photo_400&v=5.101&access_token=**************** HTTP/2
+> Host: api.vk.com
+> User-Agent: curl/7.58.0
+> Accept: */*
+> 
+{ [5 bytes data]
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+} [5 bytes data]
+< HTTP/2 200 
+< server: VK
+< date: Sat, 07 Sep 2019 15:57:43 GMT
+< content-type: application/json; charset=utf-8
+< content-length: 229
+< x-powered-by: PHP/3.20892
+< cache-control: no-store
+< strict-transport-security: max-age=86400
+< 
+{ [229 bytes data]
+100   229  100   229    0     0   1940      0 --:--:-- --:--:-- --:--:--  1957
+* Connection #0 to host api.vk.com left intact
+{
+  "response": [
+    {
+      "id": 32126472,
+      "first_name": "Алексей",
+      "last_name": "Медведев",
+      "is_closed": false,
+      "can_access_closed": true,
+      "photo_400": "https://sun9-17.userapi.com/c844618/v844618129/c0b93/fOiVWl7m1GY.jpg?ava=1"
+    }
+  ]
+}
+```
+> Какой код ответа присылается от api?
+> > 200
+> Что содержит тело ответа?
+> > Json
+> В каком формате и какой кодировке содержаться данные?
+> > content-type: application/json; charset=utf-8
+> Какой веб-сервер отвечает на запросы?
+> > server: VK 
+> Какая версия протокола HTTP используется?
+> > HTTP/2
 #### 1.3.3.  POST запросы проще отправлять с формы, встроенной в документацию api. Чтобы посмотреть, как выглядит запрос, можно воспользоваться панелью разработчика браузера (F12 в Chrome -> вкладка Network).
 ##### 1.3.3.1.  Отправьте запись на стену любому пользователю/группе и убедитесь, что она пришла. 
 ```bash
-alexey@alexey-L380:~/Downloads$ curl  "https://api.vk.com/method/wall.post?mute_notifications=1&owner_id=32126472&v=5.101&access_token=$VKTOKEN"  --data-urlencode "message=$(date)" -q |jq
+alexey@alexey-L380:~/Downloads$ curl  -X POST "https://api.vk.com/method/wall.post?mute_notifications=1&owner_id=32126472&v=5.101&access_token=$VKTOKEN"  --data-urlencode "message=$(date)" -q |jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 				 Dload  Upload   Total   Spent    Left  Speed
 100   105  100    29  100    76    192    503 --:--:-- --:--:-- --:--:--   695
