@@ -15,6 +15,9 @@
  
 #### 1.3.1. Зайдите на https://vk.com/dev/api_requests и посмотрите структуру запросов к данному api.
 #### 1.3.2. Используя документацию (https://vk.com/dev/methods) выполните следующие задания (обратите внимание, запросы нужно отправлять не из предложенной на сайте формы, а как в предыдущем задании):
+Получение ключа: `https://oauth.vk.com/authorize?client_id=7127124&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=wall&response_type=token&v=5.101`
+Запрос ключа: `https://oauth.vk.com/blank.html#access_token=*******************&expires_in=86400&user_id=32126472`
+Добавление ключа в переменные среды: `alexey@alexey-L380:~/Downloads$ VKTOKEN=*******************`
 ##### 1.3.2.1. Получите список всех факультетов МГТУ им. Н.Э.Баумана.
 ```json
 alexey@alexey-L380:~/Downloads$ curl "https://api.vk.com/method/database.getFaculties?university_id=250&count=40&v=5.101&access_token=$VKTOKEN" | jq
@@ -110,6 +113,7 @@ alexey@alexey-L380:~/Downloads$ curl "https://api.vk.com/method/database.getFacu
 }
 
 ```
+
 ##### 1.3.2.2. Получите свою аватарку.
 ```json
 alexey@alexey-L380:~/Downloads$ curl "https://api.vk.com/method/users.get?user_ids=32126472&fields=photo_400&v=5.101&access_token=$VKTOKEN" | jq
@@ -128,7 +132,8 @@ alexey@alexey-L380:~/Downloads$ curl "https://api.vk.com/method/users.get?user_i
     }
   ]
 }
-```
+``` 
+Ссылка на аватарку `https://sun9-17.userapi.com/c844618/v844618129/c0b93/fOiVWl7m1GY.jpg?ava=1`
 ##### 1.3.2.3. Ответьте на вопросы: какой код ответа присылается от api? Что содержит тело ответа? В каком формате и какой кодировке содержаться данные? Какой веб-сервер отвечает на запросы? Какая версия протокола HTTP используется?
 #### 1.3.3.  POST запросы проще отправлять с формы, встроенной в документацию api. Чтобы посмотреть, как выглядит запрос, можно воспользоваться панелью разработчика браузера (F12 в Chrome -> вкладка Network).
 ##### 1.3.3.1.  Отправьте запись на стену любому пользователю/группе и убедитесь, что она пришла. 
