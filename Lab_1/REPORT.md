@@ -6,7 +6,8 @@
 ### 1.2. С помощью специального ПО (Postman, либо многочисленные аналоги, например, Restlet Clent - расширение для Chrome) вручную отправить следующие запросы и ответить на предлагаемые вопросы.
  
 #### 1.2.1. Запрос OPTIONS. Отправьте запрос на http://mail.ru, http://ya.ru, www.rambler.ru, https://www.google.ru, https://github.com/,   www.apple.com/. Для чего используется запрос OPTIONS? Какие коды ответов приходят при этом запросе? Какие сайты правильно обработали запрос и вернули ожидаемые данные?
- 
+
+TODO
 #### 1.2.2. Запрос HEAD.  vk.com, www.apple.com, www.msn.com. Для чего нужен запрос HEAD? Какой сайт прислал ожидаемый ответ?
 
 ```
@@ -58,18 +59,121 @@ Access-Control-Allow-Methods: HEAD,GET,OPTIONS
 X-XSS-Protection: 1
 X-MSEdge-Ref: Ref A: D1602783B8364EF699CBA3589D896415 Ref B: STOEDGE1007 Ref C: 2019-09-07T14:48:17Z
 Date: Sat, 07 Sep 2019 14:48:17 GMT
-``` 
+```
+Выводы 
+  * vk.com ответил кодом 418 (I’m a teapot — Этот код был введен в 1998 году как одна из традиционных первоапрельских шуток IETF в RFC 2324.Не ожидается, что данный код будет поддерживаться реальными серверами)
+  * www.apple.com ответил кодом 301 (Moved Permanently — запрошенный документ был окончательно перенесен на новый URI, указанный в поле Location заголовка. Некоторые клиенты некорректно ведут себя при обработке данного кода. Появился в HTTP/1.0.)
+ * www.msn.com ответил кодом 302 (Moved Temporarily — запрошенный документ временно доступен по другому URI, указанному в заголовке в поле Location.)
+
 > Для чего нужен запрос HEAD?
 > > TODO
 
 > Какой сайт прислал ожидаемый ответ?
-```vk.com ответил кодом 418 (I’m a teapot — Этот код был введен в 1998 году как одна из традиционных первоапрельских шуток IETF в RFC 2324, Hyper Text Coffee Pot Control Protocol. Не ожидается, что данный код будет поддерживаться реальными серверами)
-www.apple.com ответил кодом 301 (Moved Permanently — запрошенный документ был окончательно перенесен на новый URI, указанный в поле Location заголовка. Некоторые клиенты некорректно ведут себя при обработке данного кода. Появился в HTTP/1.0.)
-www.msn.com ответил кодом 302 (Moved Temporarily — запрошенный документ временно доступен по другому URI, указанному в заголовке в поле Location.)
-
-vk.com ответил кодом которого не существует, www.apple.com сообщил не необхомости редиректа на https версию сайта (безопасно), www.msn.com перенаправили на росиийскую версию сайта http://www.msn.com/ ru-ru/ (не безопасно)
+> > vk.com ответил кодом которого не существует(самый не правильный ответ), www.apple.com сообщил не необхомости редиректа на https версию сайта (безопасно), www.msn.com перенаправили на росиийскую версию сайта http://www.msn.com/ ru-ru/ (не безопасно)
 ``` 
 #### 1.2.3. Запросы GET и POST. Отправьте по запросу на yandex.ru, google.com и apple.com. Что они вернули? Что содержится в теле ответа?
+```
+alexey@alexey-L380:~/Downloads$ curl  -i -X GET http://yandex.ru
+HTTP/1.1 302 Found
+Location: https://yandex.ru/
+Date: Sat, 07 Sep 2019 15:02:13 GMT
+X-Content-Type-Options: nosniff
+Set-Cookie: yandexuid=3938418171567868533; Expires=Tue, 04-Sep-2029 15:02:13 GMT; Domain=.yandex.ru; Path=/
+Content-Length: 0
+Expires: Sat, 07 Sep 2019 15:02:14 GMT
+P3P: policyref="/w3c/p3p.xml", CP="NON DSP ADM DEV PSD IVDo OUR IND STP PHY PRE NAV UNI"
+Last-Modified: Sat, 07 Sep 2019 15:02:14 GMT
+Cache-Control: no-cache,no-store,max-age=0,must-revalidate
+
+alexey@alexey-L380:~/Downloads$ curl  -i -X GET http://google.com
+HTTP/1.1 301 Moved Permanently
+Location: http://www.google.com/
+Content-Type: text/html; charset=UTF-8
+Date: Sat, 07 Sep 2019 15:02:30 GMT
+Expires: Mon, 07 Oct 2019 15:02:30 GMT
+Cache-Control: public, max-age=2592000
+Server: gws
+Content-Length: 219
+X-XSS-Protection: 0
+X-Frame-Options: SAMEORIGIN
+
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+
+
+alexey@alexey-L380:~/Downloads$ curl  -i -X GET http://apple.com
+HTTP/1.1 301 MOVED PERMANENTLY
+Server: Apache 
+Date: Sat, 07 Sep 2019 15:02:40 GMT
+Location: https://www.apple.com/
+Content-type: text/html
+Connection: close
+
+alexey@alexey-L380:~/Downloads$
+```
+> Что они вернули? Что содержится в теле ответа?
+> > Все сайты ответили 302 или 301 кодом редиректа. google.com в теле ответа прислал html страницу со ссылкой на другую версию сайта
+
+```
+alexey@alexey-L380:~/Downloads$ curl  -i -X POST http://yandex.ru
+HTTP/1.1 403 Forbidden
+ETag: "5d715b5e-3077"
+Content-Type: text/html; charset=utf-8
+Date: Sat, 07 Sep 2019 15:03:22 GMT
+Content-Length: 12407
+X-Content-Type-Options: nosniff
+
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Яндекс</title>
+    <link rel="shortcut icon" href="">
+    <style type="text/css">
+body, div, ul, table, tr, td, form, input {
+    margin: 0;
+    padding: 0
+}
+.........
+
+
+alexey@alexey-L380:~/Downloads$ curl  -i -X POST http://apple.com
+HTTP/1.1 301 MOVED PERMANENTLY
+Server: Apache 
+Date: Sat, 07 Sep 2019 15:04:02 GMT
+Location: https://www.apple.com/
+Content-type: text/html
+Connection: close
+
+alexey@alexey-L380:~/Downloads$ curl  -i -X POST http://google.com
+HTTP/1.0 411 Length Required
+Content-Type: text/html; charset=UTF-8
+Referrer-Policy: no-referrer
+Content-Length: 1564
+Date: Sat, 07 Sep 2019 15:04:21 GMT
+
+<!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 411 (Length Required)!!1</title>
+  <style>
+    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}
+  </style>
+  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>
+  <p><b>411.</b> <ins>That’s an error.</ins>
+  <p>POST requests require a <code>Content-length</code> header.  <ins>That’s all we know.</ins>
+alexey@alexey-L380:~/Downloads$
+
+```
+
+> Что они вернули? Что содержится в теле ответа?
+> > Яндекс и Гугл ответили ошибкой 403 и 411 соответвенно. В теле их ответа есть html старница с соббщение об ошибке. apple.com опять ответил 302 кодом редиректа 
+
  
 ### 1.3. Работа с api сайта. Многие крупные сервисы предоставляют открытое api. Как правило, оно реализовано на подходе REST, но это необязательно. Такое api используется сторонними сервисами и приложениями, которые хотят воспользоваться услугами предоставляющего такое api сервиса. Рассмотрим такое api на примере сайта vk.com (при желании можно выбрать другой подходящий сервис).
  
@@ -273,4 +377,5 @@ alexey@alexey-L380:~/Downloads$ curl  -X POST "https://api.vk.com/method/wall.po
 }
 ```
 ##### 1.3.3.2.  Ответьте на вопрос: каким образом передаются данные от пользователя к серверу в POST-запросах?
+TODO
 
