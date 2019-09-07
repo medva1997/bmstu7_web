@@ -1,0 +1,14 @@
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/bin/Debug/netcoreapp2.2/ApiServer.deps.json
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/bin/Debug/netcoreapp2.2/ApiServer.runtimeconfig.json
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/bin/Debug/netcoreapp2.2/ApiServer.runtimeconfig.dev.json
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/bin/Debug/netcoreapp2.2/ApiServer.dll
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/bin/Debug/netcoreapp2.2/ApiServer.pdb
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.csprojAssemblyReference.cache
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.csproj.CoreCompileInputs.cache
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.RazorAssemblyInfo.cache
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.RazorAssemblyInfo.cs
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.AssemblyInfoInputs.cache
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.AssemblyInfo.cs
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.RazorTargetAssemblyInfo.cache
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.dll
+/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/Debug/netcoreapp2.2/ApiServer.pdb

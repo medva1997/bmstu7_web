@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/ApiServer.csproj": {}
+  },
+  "projects": {
+    "/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/ApiServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/ApiServer.csproj",
+        "projectName": "ApiServer",
+        "projectPath": "/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/ApiServer.csproj",
+        "packagesPath": "/home/alexey/.nuget/packages/",
+        "outputPath": "/home/alexey/repos/bmstu_sem7_web/Lab_1/ApiServer/ApiServer/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/alexey/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
