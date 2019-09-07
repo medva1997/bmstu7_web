@@ -7,7 +7,121 @@
  
 #### 1.2.1. Запрос OPTIONS. Отправьте запрос на http://mail.ru, http://ya.ru, www.rambler.ru, https://www.google.ru, https://github.com/,   www.apple.com/. Для чего используется запрос OPTIONS? Какие коды ответов приходят при этом запросе? Какие сайты правильно обработали запрос и вернули ожидаемые данные?
 
-TODO
+```
+alexey@alexey-L380:~/Downloads$ curl -i -X OPTIONS "http://mail.ru"
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.14.1
+Date: Sat, 07 Sep 2019 18:58:16 GMT
+Content-Type: text/html
+Content-Length: 185
+Connection: keep-alive
+Location: https://mail.ru/
+X-XSS-Protection: 1; mode=block; report=https://cspreport.mail.ru/xxssprotection
+X-Content-Type-Options: nosniff
+
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body bgcolor="white">
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.14.1</center>
+</body>
+</html>
+
+alexey@alexey-L380:~/Downloads$ curl -i -X OPTIONS "http://ya.ru"
+HTTP/1.1 403 Forbidden
+ETag: "5d715b5e-3077"
+Content-Type: text/html; charset=utf-8
+Date: Sat, 07 Sep 2019 18:58:40 GMT
+Content-Length: 12407
+X-Content-Type-Options: nosniff
+
+<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Яндекс</title>
+    <link rel="shortcut icon" href="">
+    <style type="text/css">
+body, div, ul, table, tr, td, form, input {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    font: .8em Arial, sans-serif;
+    color: #000;
+    background: #fff;
+}
+.......
+
+
+alexey@alexey-L380:~/Downloads$ curl -i -X OPTIONS "https://www.google.ru"
+HTTP/2 405 
+allow: GET, HEAD
+date: Sat, 07 Sep 2019 18:59:12 GMT
+content-type: text/html; charset=UTF-8
+server: gws
+content-length: 1592
+x-xss-protection: 0
+x-frame-options: SAMEORIGIN
+alt-svc: quic=":443"; ma=2592000; v="46,43,39"
+
+<!DOCTYPE html>
+<html lang=en>
+  <meta charset=utf-8>
+  <meta name=viewport content="initial-scale=1, minimum-scale=1, width=device-width">
+  <title>Error 405 (Method Not Allowed)!!1</title>
+  <style>
+    *{margin:0;padding:0}html,code{font:15px/22px arial,sans-serif}html{background:#fff;color:#222;padding:15px}body{margin:7% auto 0;max-width:390px;min-height:180px;padding:30px 0 15px}* > body{background:url(//www.google.com/images/errors/robot.png) 100% 5px no-repeat;padding-right:205px}p{margin:11px 0 22px;overflow:hidden}ins{color:#777;text-decoration:none}a img{border:0}@media screen and (max-width:772px){body{background:none;margin-top:0;max-width:none;padding-right:0}}#logo{background:url(//www.google.com/images/branding/googlelogo/1x/googlelogo_color_150x54dp.png) no-repeat;margin-left:-5px}@media only screen and (min-resolution:192dpi){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat 0% 0%/100% 100%;-moz-border-image:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) 0}}@media only screen and (-webkit-min-device-pixel-ratio:2){#logo{background:url(//www.google.com/images/branding/googlelogo/2x/googlelogo_color_150x54dp.png) no-repeat;-webkit-background-size:100% 100%}}#logo{display:inline-block;height:54px;width:150px}
+  </style>
+  <a href=//www.google.com/><span id=logo aria-label=Google></span></a>
+  <p><b>405.</b> <ins>That’s an error.</ins>
+  <p>The request method <code>OPTIONS</code> is inappropriate for the URL <code>/</code>.  <ins>That’s all we know.</ins>
+
+
+alexey@alexey-L380:~/Downloads$ curl -i -X OPTIONS "https://github.com/"
+HTTP/1.1 404 Not Found
+Date: Sat, 07 Sep 2019 18:59:48 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 0
+Server: GitHub.com
+Status: 404 Not Found
+X-Request-Id: 9ea03f3d-61b5-419a-9c04-a45291420826
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+X-Frame-Options: deny
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: origin-when-cross-origin, strict-origin-when-cross-origin
+Expect-CT: max-age=2592000, report-uri="https://api.github.com/_private/browser/errors"
+Content-Security-Policy: default-src 'none'; base-uri 'self'; block-all-mixed-content; connect-src 'self' uploads.github.com www.githubstatus.com collector.githubapp.com api.github.com www.google-analytics.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com; frame-ancestors 'none'; frame-src render.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com collector.githubapp.com avatars0.githubusercontent.com avatars1.githubusercontent.com avatars2.githubusercontent.com avatars3.githubusercontent.com github-cloud.s3.amazonaws.com; manifest-src 'self'; media-src 'none'; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com
+X-GitHub-Request-Id: ACDE:1769:963623:EA2EF5:5D73FE24
+
+
+
+alexey@alexey-L380:~/Downloads$ curl -i -X OPTIONS "www.apple.com/"
+HTTP/1.1 301 Moved Permanently
+Server: AkamaiGHost
+Content-Length: 0
+Location: https://www.apple.com/
+Cache-Control: max-age=0
+Expires: Sat, 07 Sep 2019 19:00:20 GMT
+Date: Sat, 07 Sep 2019 19:00:20 GMT
+Connection: keep-alive
+strict-transport-security: max-age=31536000
+Set-Cookie: geo=RU; path=/; domain=.apple.com
+Set-Cookie: ccl=qEgdOJMYnwxZflBu3PWsRg==; path=/; domain=.apple.com
+
+
+```
+
+> Для чего используется запрос OPTIONS?
+> > Запрашивает информацию о коммуникационных параметрах сервера.
+
+> Какие коды ответов приходят при этом запросе?
+> >
+
+> Какие сайты правильно обработали запрос и вернули ожидаемые данные?
+> > "https://www.google.ru" (allow: GET, HEAD) 
 #### 1.2.2. Запрос HEAD.  vk.com, www.apple.com, www.msn.com. Для чего нужен запрос HEAD? Какой сайт прислал ожидаемый ответ?
 
 ```
@@ -66,7 +180,7 @@ Date: Sat, 07 Sep 2019 14:48:17 GMT
  * www.msn.com ответил кодом 302 (Moved Temporarily — запрошенный документ временно доступен по другому URI, указанному в заголовке в поле Location.)
 
 > Для чего нужен запрос HEAD?
-> > TODO
+> > HEAD запрос нужен чтобы сделать запрос, но не получать тело ответа. Метод HEAD запрашивает только информацию заголовка о файле или ресурсе такую  как: время изменения документа, размер документа,тип документа, тип сервера
 
 > Какой сайт прислал ожидаемый ответ?
 > > vk.com ответил кодом которого не существует(самый не правильный ответ), www.apple.com сообщил не необхомости редиректа на https версию сайта (безопасно), www.msn.com перенаправили на росcиийскую версию сайта http://www.msn.com/ ru-ru/ (не безопасно)
