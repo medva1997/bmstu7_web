@@ -410,12 +410,13 @@ Trying 95.213.11.163...
 * Connection #0 to host api.vk.com left intact
 {"response":{"post_id":1195}}a
 ```
-Данные передаются от пользователя в формате application/x-www-form-urlencoded. При Get запросе данных полей нету
-> Content-Length: 156
-> Content-Type: application/x-www-form-urlencoded
+Данные передаются от пользователя в формате application/x-www-form-urlencoded внутри тела запроса. При Get запросе данных полей нету
+```
+Content-Length: 156
+Content-Type: application/x-www-form-urlencoded
+```
 
-
-'''
+```
 alexey@alexey-L380:~/Downloads$ curl -v  -X GET "https://api.vk.com/method/wall.post?mute_notifications=1&owner_id=32126472&v=5.101&access_token=$VKTOKEN&message=HIIII"
 Note: Unnecessary use of -X or --request, GET is already inferred.
 *   Trying 93.186.225.192...
@@ -444,4 +445,4 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 < 
 * Connection #0 to host api.vk.com left inta
 {"response":{"post_id":1196}}
-'''
+```
