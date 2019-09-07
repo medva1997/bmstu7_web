@@ -20,16 +20,16 @@
 ##### 1.3.2.3. Ответьте на вопросы: какой код ответа присылается от api? Что содержит тело ответа? В каком формате и какой кодировке содержаться данные? Какой веб-сервер отвечает на запросы? Какая версия протокола HTTP используется?
 #### 1.3.3.  POST запросы проще отправлять с формы, встроенной в документацию api. Чтобы посмотреть, как выглядит запрос, можно воспользоваться панелью разработчика браузера (F12 в Chrome -> вкладка Network).
 ##### 1.3.3.1.  Отправьте запись на стену любому пользователю/группе и убедитесь, что она пришла. 
-	```bash
-	alexey@alexey-L380:~/Downloads$ curl  "https://api.vk.com/method/wall.post?mute_notifications=1&owner_id=32126472&v=5.101&access_token=$VKTOKEN"  --data-urlencode "message=$(date)" -q |jq
-	  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-					 Dload  Upload   Total   Spent    Left  Speed
-	100   105  100    29  100    76    192    503 --:--:-- --:--:-- --:--:--   695
-	{
-	  "response": {
-	    "post_id": 1184
-	  }
-	}
-	```
+```bash
+alexey@alexey-L380:~/Downloads$ curl  "https://api.vk.com/method/wall.post?mute_notifications=1&owner_id=32126472&v=5.101&access_token=$VKTOKEN"  --data-urlencode "message=$(date)" -q |jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+				 Dload  Upload   Total   Spent    Left  Speed
+100   105  100    29  100    76    192    503 --:--:-- --:--:-- --:--:--   695
+{
+  "response": {
+    "post_id": 1184
+  }
+}
+```
 ##### 1.3.3.2.  Ответьте на вопрос: каким образом передаются данные от пользователя к серверу в POST-запросах?
 
