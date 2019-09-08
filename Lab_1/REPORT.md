@@ -560,3 +560,199 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 * Connection #0 to host api.vk.com left inta
 {"response":{"post_id":1196}}
 ```
+
+### 2. Реализуйте небольшое серверное приложение, с использованием любого фреймворка. Лучшего всего для этой цели подойдет NodeJS: решение получится очень компактным и простым. Сервер должен содержать предоставлять API с поддержкой (GET, POST, DELETE, PUT, OPTION). Данные отправлять в формате json. Конкретное содержание запросов - на ваше усмотрение. Подключите фантазию. (Можно сделать простейший CRUD-сервис с хранением данных в RAM).
+sudo docker build -t web_lab1_image .
+sudo docker run -it --rm -p 5000:80 --name web_lab1 web_lab1_image
+
+```
+#### Ничего в базе нету
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl -i -X GET http://localhost:5000/api/phone/ 
+HTTP/1.1 200 OK
+Date: Sat, 07 Sep 2019 21:58:18 GMT
+Content-Type: application/json; charset=utf-8
+Server: Kestrel
+Transfer-Encoding: chunked
+
+[]
+
+
+#### Добавляем раз
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl -i -X POST -d '{"vendor":"Samsung","model":"Note7","price":"50.0"}' -H "Content-Type: application/json" http://localhost:5000/api/phone
+HTTP/1.1 201 Created
+Date: Sat, 07 Sep 2019 21:58:51 GMT
+Content-Type: application/json; charset=utf-8
+Server: Kestrel
+Transfer-Encoding: chunked
+Location: http://localhost:5000/api/Phone/1
+
+{"id":1,"vendor":"Samsung","model":"Note7","price":50.0}
+
+
+#### Добавляем два
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl -i -X POST -d '{"vendor":"Samsung","model":"Note8","price":"60.0"}' -H "Content-Type: application/json" http://localhost:5000/api/phone
+HTTP/1.1 201 Created
+Date: Sat, 07 Sep 2019 21:59:02 GMT
+Content-Type: application/json; charset=utf-8
+Server: Kestrel
+Transfer-Encoding: chunked
+Location: http://localhost:5000/api/Phone/2
+
+{"id":2,"vendor":"Samsung","model":"Note8","price":60.0}
+
+#### Добавляем три
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl -i -X POST -d '{"vendor":"Samsung","model":"Note9","price":"70.0"}' -H "Content-Type: application/json" http://localhost:5000/api/phone
+HTTP/1.1 201 Created
+Date: Sat, 07 Sep 2019 21:59:18 GMT
+Content-Type: application/json; charset=utf-8
+Server: Kestrel
+Transfer-Encoding: chunked
+Location: http://localhost:5000/api/Phone/3
+
+{"id":3,"vendor":"Samsung","model":"Note9","price":70.0}
+
+
+#### Проверяем
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  -X GET http://localhost:5000/api/phone | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   172    0   172    0     0  34400      0 --:--:-- --:--:-- --:--:-- 34400
+[
+  {
+    "id": 1,
+    "vendor": "Samsung",
+    "model": "Note7",
+    "price": 50
+  },
+  {
+    "id": 2,
+    "vendor": "Samsung",
+    "model": "Note8",
+    "price": 60
+  },
+  {
+    "id": 3,
+    "vendor": "Samsung",
+    "model": "Note9",
+    "price": 70
+  }
+]
+
+
+#### Исправляем два
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl -i -X PUT -d '{"id":"2","vendor":"Apple","model":"iphone5","price":"15.0"}' -H "Content-Type: application/json" http://localhost:5000/api/phone/2
+HTTP/1.1 204 No Content
+Date: Sat, 07 Sep 2019 22:01:58 GMT
+Server: Kestrel
+
+#### Проверяем
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  -X GET http://localhost:5000/api/phone/2 | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    56    0    56    0     0    982      0 --:--:-- --:--:-- --:--:--   965
+{
+  "id": 2,
+  "vendor": "Apple",
+  "model": "iphone5",
+  "price": 15
+}
+
+
+#### Удаляем
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  -X delete http://localhost:5000/api/phone/2 -i
+HTTP/1.1 204 No Content
+Date: Sat, 07 Sep 2019 22:02:36 GMT
+Server: Kestrel
+
+
+#### Проверяем
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  -X GET http://localhost:5000/api/phone/2 -i
+HTTP/1.1 404 Not Found
+Date: Sat, 07 Sep 2019 22:04:54 GMT
+Server: Kestrel
+Content-Length: 0
+
+
+#### Удаляем пустоту
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  -X delete http://localhost:5000/api/phone/2 -i
+HTTP/1.1 404 Not Found
+Date: Sat, 07 Sep 2019 22:02:52 GMT
+Server: Kestrel
+Content-Length: 0
+
+
+#### Проверяем OPTIONS
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  -X OPTIONS http://localhost:5000/api/phone -i 
+HTTP/1.1 204 No Content
+Date: Sun, 08 Sep 2019 00:05:30 GMT
+Server: Kestrel
+Allow: GET, POST, PUT, DELETE, OPTIONS
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+
+```
+
+
+
+
+
+### 3. Доп. задание. Статика и маршрутизация.
+
+#### 3.1.   Добавьте папку static (классическое название для статически раздаваемой папки).
+#### 3.2.   В папке static создайте папки html и img.
+```
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ tree ApiServer/ApiServer/static/
+ApiServer/ApiServer/static/
+├── html
+│   ├── hack.html
+│   └── index.html
+└── img
+    └── image.jpg
+
+2 directories, 3 files
+
+```
+#### 3.3.   В папке static/html создайте файл index.html со следующим содержанием (или любым другим):
+```<head></head>
+<body>
+<h1>Hello, world!</h1>
+<img src=”/img/image.jpg”>
+</body>
+```
+### 3.3. Настройте сервер так, чтобы при запросе из браузера отображалась эта страница.
+TODO
+### 3.4. Настройте routing (маршрутизацию) на вашем сервере. Например, чтобы путь /hack тоже отдавал файл index.html, а путь /, по умолчанию отдающий index, выдавал дополнительную страницу hack.html.
+```
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  http://localhost:5000/hack 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Hello, world!</h1>
+    <img src="/img/image.jpg">
+</body>
+
+</html>
+
+alexey@alexey-L380:~/repos/bmstu_sem7_web/Lab_1$ curl  http://localhost:5000/
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Hack page!</h1>
+    <img src="/img/image.jpg">
+</body>
+
+</html>
+```
+
+### 3.5. Переименуйте hack.html (содержащую теги html) в hack.txt. Что изменилось? Почему? Как сделать так, чтобы страница отображалась корректно?
+TODO
+
