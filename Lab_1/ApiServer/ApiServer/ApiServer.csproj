@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <Content Include="static\html\hack.html" />
+      <Content Include="static\html\hack.txt" />
     </ItemGroup>
 
 </Project>
