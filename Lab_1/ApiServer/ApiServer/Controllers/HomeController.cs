@@ -7,7 +7,7 @@ namespace ApiServer.Controllers
         // GET
         public IActionResult Index()
         {
-             return File("html/hack.html", "text/html");
+             return File("html/hack.txt", "text/html");
         }
     }
 }
